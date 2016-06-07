@@ -275,7 +275,8 @@ class OAuthRequest(object):
             signature_method.get_name())
         # Set the signature.
         self.set_parameter('oauth_signature',
-            self.build_signature(signature_method, consumer, token))
+            self.build_signature(signature_method, consumer, token)\
+            .decode("utf-8"))
 
     def build_signature(self, signature_method, consumer, token):
         """Calls the build signature method within the signature method."""
