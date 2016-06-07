@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 import xml.etree.cElementTree as etree
-from cgi import escape
+try:
+    # Python 3
+    from html import escape
+except ImportError:
+    # Python 2
+    from cgi import escape
 
-import oauth
-from oauth import OAuthConsumer, OAuthRequest
+from . import oauth
+from .oauth import OAuthConsumer, OAuthRequest
 
 
 SIGNATURE_METHOD = oauth.OAuthSignatureMethod_HMAC_SHA1()
@@ -23,9 +28,9 @@ class InvalidOption(Exception):
 
 # method to validate passed options
 def validateOptions(options, default_options):
-    for k, v in options.iteritems():
+    for k, v in list(options.items()):
         if k not in default_options:
-            msg = 'Option %s not found in %s' % (k, default_options.keys())
+            msg = 'Option %s not found in %s' % (k, list(default_options.keys()))
             raise InvalidOption(msg)
 
 
@@ -114,7 +119,8 @@ def postDirectOrder(params, request_data):
     root_xml.attrib.update(request_data)
 
     # pesapal_request_data
-    pesapal_request_data = escape(etree.tostring(root_xml))
+    #print(etree.tostring(root_xml))
+    pesapal_request_data = escape(etree.tostring(root_xml).decode("utf-8"))
     # print etree.tostring(root_xml)
     default_params = {
         'oauth_callback': '',
@@ -128,7 +134,7 @@ def postDirectOrder(params, request_data):
     }
 
     http_url = 'PostPesapalDirectOrderV4'
-    
+
     return createOauthRequest(http_url, params, default_params)
 
 
@@ -142,7 +148,7 @@ def queryPaymentStatus(params):
         'pesapal_merchant_reference': '',
         'pesapal_transaction_tracking_id': ''
     }
-    
+
     return createOauthRequest(http_url, params, default_params)
 
 
@@ -150,7 +156,7 @@ def queryPaymentStatusByMerchantRef(params):
     """
     Same as QueryPaymentStatus, but only the unique order id genereated by your system is required as the input parameter.
     """
-    
+
     http_url = 'QueryPaymentStatusByMerchantRef'
 
     default_params = {

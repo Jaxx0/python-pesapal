@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import unittest
-from urllib2 import urlopen
+#from urllib.request import urlopen
 
 import sys
 import os
@@ -42,7 +42,7 @@ class TestURLS(unittest.TestCase):
           ]
         }
 
-        print pesapal.postDirectOrder(post_params, request_data)
+        print((pesapal.postDirectOrder(post_params, request_data)))
 
     def test_query_payment_status(self):
 
@@ -51,7 +51,7 @@ class TestURLS(unittest.TestCase):
           'pesapal_transaction_tracking_id': '000'
         }
 
-        print pesapal.queryPaymentStatus(params)
+        print((pesapal.queryPaymentStatus(params)))
 
     def test_query_payment_status_by_merchant_ref(self):
 
@@ -59,7 +59,7 @@ class TestURLS(unittest.TestCase):
           'pesapal_merchant_reference': '000'
         }
 
-        print pesapal.queryPaymentStatusByMerchantRef(params)
+        print((pesapal.queryPaymentStatusByMerchantRef(params)))
 
     def test_query_payment_details(self):
 
@@ -68,7 +68,7 @@ class TestURLS(unittest.TestCase):
           'pesapal_transaction_tracking_id': '000'
         }
 
-        print pesapal.queryPaymentDetails(params)
+        print((pesapal.queryPaymentDetails(params)))
 
 
 if __name__ == '__main__':

@@ -12,4 +12,6 @@ setup(
     packages=['pesapal',],
     package_dir = {'pesapal': 'lib'},
     license='MIT License',
-    zip_safe=True)
+    zip_safe=True,
+    #install_requires=['six']
+)
