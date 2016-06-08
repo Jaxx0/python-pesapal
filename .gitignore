@@ -1,4 +1,5 @@
 *.pyc
 build/
+__pycache__/
 pesapal.egg-info/
 dist
